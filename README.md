@@ -95,3 +95,19 @@ struct Post {
     let createdAt: Date
 }
 ```
+
+When retrieving data from CloudKit, we can build our `Query`:
+```swift
+let query = Query<Post>()
+    .filter(.author, equals: user)
+    .sorted(by: .createdAt, ascending: false)
+```
+
+and then use it to query our data:
+```swift
+let posts = try await CKContainer
+    .default()
+    .publicCloudDatabase
+    .perform(query) 
+//the result here is (models: [(id: CKRecord.ID, result: Result<Post, Error>)], cursor: CKQueryOperation.Cursor?)
+```
