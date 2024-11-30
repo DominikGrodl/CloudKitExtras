@@ -1,6 +1,6 @@
 # CloudKitExtras
 
-CloudKitExtras is a set of utilities to use alongside 🍎 CloudKit. It provider APIs to interact with the database and protocol to simplify forming CloudKit compatible models.
+CloudKitExtras is a set of utilities to use alongside 🍎 CloudKit. It provider APIs to interact with the database and protocols to simplify forming CloudKit compatible models.
 
 ## Query
 
@@ -36,7 +36,7 @@ public protocol CKEncodable {
 }
 ```
 
-CKDecodable is a protocol defining the neccesities to easily encode your types to `CKRecord`s. You need to provide the `RecordType`, which is simply a String name of your Record type defined in yout CloudKit dashboard. 
+CKDecodable is a protocol defining the neccesities to easily encode your types to `CKRecord`s. You need to provide the `RecordType`, which is simply a String name of your CKRecord type defined in your CloudKit dashboard. 
 
 *When using the `@CKEncodable` or `@CKCodable` macro, `Fields` enum and `func value(for field: Fields) -> CKRecordValueProtocol?` are generated automatically.*
 
@@ -44,12 +44,12 @@ CKDecodable is a protocol defining the neccesities to easily encode your types t
 ```swift
 public protocol RecordFields: CaseIterable, RawRepresentable where RawValue == String {}
 ```
-Simple protocol requiring the type to be CaseIterable and String RawRepresentable. This is used to identified the available fields both when encoding/decoding as well as building Queries and specifying which fields to retrieve.
+Simple protocol requiring the type to be `CaseIterable` and `String` `RawRepresentable`. This is used to identified the available fields both when encoding/decoding as well as building Queries and specifying which fields to retrieve.
 
-When using the retrieve APIs with a Query, the Fields enum will be used to specify which fields to retrieve, so that if you have a type which only needs a subset of the record (such as only the name and image resource from a larger profile), the `desiredKeys` field on the `func records(matching:inZoneWith:desiredKeys:resultsLimit)` method will be populated with the fields.
+When using the retrieve APIs with a `Query`, the `Fields` enum will be used to specify which fields to retrieve, so that if you have a type which only needs a subset of the `CKRecord` (such as only the name and image resource from a larger profile), the `desiredKeys` field on the `func records(matching:inZoneWith:desiredKeys:resultsLimit)` method will be populated with the fields, saving us from over fetching.
 
 ## Examples
-We can define a simple Post type:
+We can define a simple `Post` struct:
 ```swift
 struct Post {
     let author: CKRecord.Reference
@@ -57,7 +57,7 @@ struct Post {
     let createdAt: Date
 }
 ```
-and conform it to CKCodable like this:
+and conform it to `CKCodable` like this:
 ```swift
 extension Post: CKCodable {
     static let RecordType = "Post" //Here we define the Record type for CloudKit
@@ -85,7 +85,7 @@ extension Post: CKCodable {
     }
 }
 ```
-This is not a huge load of code, but can get very repetitive when used. But luckily, all this code depends only on the properties the struct has. Therefore, we can very easily automate the process using macros. We can use one of the `CKCodable`, `CKEncodable` and `CKDecodable` macros to generate everything apart the RecordType String. The RecordType is still left to the author, because it does not always make sense to make the RecordType the same as the name of the Struct and could easily lead to issues. When used with the `CKCodable` macro, the code would be simplified to the following:
+This is not a huge load of code, but can get very repetitive when used. But luckily, all this code depends only on the properties the struct has. Therefore, we can very easily automate the process using macros. We can use one of the `CKCodable`, `CKEncodable` and `CKDecodable` macros to generate everything except the `RecordType`. The `RecordType` is still left to be defined by the author, because it does not always make sense to make the `RecordType` the same as the name of the type, which could easily lead to issues. When used with the `CKCodable` macro, the code would be simplified to the following:
 ```swift
 @CKCodable
 struct Post {
@@ -103,7 +103,7 @@ let query = Query<Post>()
     .sorted(by: .createdAt, ascending: false)
 ```
 
-and then use it to query our data:
+and then use it to retreive our data:
 ```swift
 let posts = try await CKContainer
     .default()
