@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CKDecodableConformanceMacro.swift
 //  CloudKitExtras
 //
 //  Created by Dominik Grodl on 25.11.2024.

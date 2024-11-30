@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CKResult.swift
 //  CloudKitExtras
 //
 //  Created by Dominik Grodl on 24.11.2024.
