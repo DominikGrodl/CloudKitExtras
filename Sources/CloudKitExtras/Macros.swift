@@ -5,8 +5,6 @@
 //  Created by Dominik Grodl on 24.11.2024.
 //
 
-import CloudKitExtrasMacros
-
 @attached(member, names: named(Fields), named(init))
 @attached(extension, conformances: CKDecodable)
 public macro CKDecodable() = #externalMacro(module: "CloudKitExtrasMacros", type: "CKDecodableMacro")
