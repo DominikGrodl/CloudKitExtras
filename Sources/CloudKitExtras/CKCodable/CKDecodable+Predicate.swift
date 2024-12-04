@@ -17,6 +17,10 @@ public extension CKDecodable {
         NSPredicate(format: "ANY \(key.rawValue) IN %@", arg)
     }
 
+    static func predicate(_ key: Fields, in arg: CVarArg) -> NSPredicate {
+        NSPredicate(format: "\(key.rawValue) IN %@", arg)
+    }
+
     static func sort(by key: Fields, ascending: Bool) -> NSSortDescriptor {
         NSSortDescriptor(key: key.rawValue, ascending: ascending)
     }

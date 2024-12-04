@@ -34,6 +34,14 @@ public extension Query {
 
     func filter(
         _ field: T.Fields,
+        in arg: CVarArg,
+        type: LogicalType = .and
+    ) -> Self {
+        self.filter(predicate: T.predicate(field, in: arg), type: type)
+    }
+
+    func filter(
+        _ field: T.Fields,
         anyIn arg: CVarArg,
         type: LogicalType = .and
     ) -> Self {
