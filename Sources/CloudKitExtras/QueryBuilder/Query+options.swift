@@ -15,7 +15,7 @@ public extension Query {
 
     func filter(
         predicate: NSPredicate,
-        type: NSCompoundPredicate.LogicalType = .and
+        type: LogicalType = .and
     ) -> Self {
         copyWith(predicate: appendPredicate(with: predicate, type: type))
     }
@@ -27,7 +27,7 @@ public extension Query {
     func filter(
         _ field: T.Fields,
         equals arg: CVarArg,
-        type: NSCompoundPredicate.LogicalType = .and
+        type: LogicalType = .and
     ) -> Self {
         self.filter(predicate: T.predicate(field, equals: arg), type: type)
     }
@@ -35,7 +35,7 @@ public extension Query {
     func filter(
         _ field: T.Fields,
         anyIn arg: CVarArg,
-        type: NSCompoundPredicate.LogicalType = .and
+        type: LogicalType = .and
     ) -> Self {
         self.filter(predicate: T.predicate(field, anyIn: arg), type: type)
     }

@@ -34,10 +34,10 @@ public struct Query<T: CKCodable> {
 }
 
 internal extension Query {
-    func appendPredicate(with additionalPredicate: NSPredicate, type: NSCompoundPredicate.LogicalType) -> NSPredicate {
+    func appendPredicate(with additionalPredicate: NSPredicate, type: LogicalType) -> NSPredicate {
         if let predicate {
             return NSCompoundPredicate(
-                type: type,
+                type: type.nsCompountPredicateLogicalTypeRepresentation,
                 subpredicates: [predicate, additionalPredicate]
             )
         } else {
